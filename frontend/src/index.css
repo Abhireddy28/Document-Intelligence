@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #EDF3FC;
+    color: #0B1730;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EDF3FC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D9E2EF;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #426FA8;
+}
+
+/* Pulse animation for AI activity */
+@keyframes ai-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(90, 58, 139, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(90, 58, 139, 0.45);
+  }
+}
+
+.ai-pulse {
+  animation: ai-glow 2.5s infinite ease-in-out;
+}
