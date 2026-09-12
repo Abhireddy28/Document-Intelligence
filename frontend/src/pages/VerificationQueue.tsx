@@ -28,9 +28,10 @@ export const VerificationQueue: React.FC = () => {
     setLoading(true);
     try {
       const data = await verificationService.getQueue(statusFilter);
-      setQueue(data);
+      setQueue(Array.isArray(data) ? data : []);
     } catch (e) {
       console.error('Error fetching verification queue:', e);
+      setQueue([]);
     } finally {
       setLoading(false);
     }
@@ -188,7 +189,7 @@ export const VerificationQueue: React.FC = () => {
                   </td>
                 </tr>
               ) : (
-                queue.map((item) => (
+                (Array.isArray(queue) ? queue : []).map((item) => (
                   <tr key={item.verification_id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="font-bold text-navy truncate max-w-xs">{item.file_name}</div>

@@ -39,10 +39,12 @@ export const Documents: React.FC = () => {
         page,
         page_size: 15,
       });
-      setDocuments(data.documents);
-      setTotal(data.total);
+      setDocuments(Array.isArray(data?.documents) ? data.documents : []);
+      setTotal(data?.total || 0);
     } catch (e) {
       console.error('Error fetching documents:', e);
+      setDocuments([]);
+      setTotal(0);
     } finally {
       setLoading(false);
     }
@@ -170,7 +172,7 @@ export const Documents: React.FC = () => {
                   </td>
                 </tr>
               ) : (
-                documents.map((doc) => (
+                (Array.isArray(documents) ? documents : []).map((doc) => (
                   <tr key={doc.document_id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3.5 px-4">
                       <div className="font-bold text-navy max-w-xs truncate">{doc.file_name}</div>

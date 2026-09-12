@@ -27,9 +27,10 @@ export const Students: React.FC = () => {
         search || undefined,
         selectedDept !== 'ALL' ? selectedDept : undefined
       );
-      setStudents(data);
+      setStudents(Array.isArray(data) ? data : []);
     } catch (e) {
       console.error('Error fetching students:', e);
+      setStudents([]);
     } finally {
       setLoading(false);
     }
@@ -132,7 +133,7 @@ export const Students: React.FC = () => {
                     </td>
                   </tr>
                 ) : (
-                  students.map((stu) => (
+                  (Array.isArray(students) ? students : []).map((stu) => (
                     <tr
                       key={stu.roll_number}
                       onClick={() => handleSelectStudent(stu)}

@@ -25,9 +25,10 @@ export const AuditLogs: React.FC = () => {
         searchDocId || undefined,
         actionFilter || undefined
       );
-      setLogs(data);
+      setLogs(Array.isArray(data) ? data : []);
     } catch (e) {
       console.error('Error fetching audit logs:', e);
+      setLogs([]);
     } finally {
       setLoading(false);
     }
@@ -124,7 +125,7 @@ export const AuditLogs: React.FC = () => {
               <p className="font-semibold text-xs">No audit events found</p>
             </div>
           ) : (
-            logs.map((log, idx) => (
+            (Array.isArray(logs) ? logs : []).map((log, idx) => (
               <div key={idx} className="p-4 hover:bg-slate-50/80 transition-colors flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">

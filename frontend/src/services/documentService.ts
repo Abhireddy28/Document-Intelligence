@@ -21,8 +21,18 @@ export const documentService = {
     page?: number;
     page_size?: number;
   }): Promise<{ total: number; page: number; page_size: number; documents: DocumentItem[] }> {
-    const res = await api.get('/documents', { params });
-    return res.data;
+    try {
+      const res = await api.get('/documents', { params });
+      return {
+        total: res.data?.total || 0,
+        page: res.data?.page || 1,
+        page_size: res.data?.page_size || 20,
+        documents: Array.isArray(res.data?.documents) ? res.data.documents : []
+      };
+    } catch (e) {
+      console.warn('Error fetching documents:', e);
+      return { total: 0, page: 1, page_size: 20, documents: [] };
+    }
   },
 
   async getDocument(documentId: string): Promise<DocumentItem> {

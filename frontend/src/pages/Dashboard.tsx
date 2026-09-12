@@ -288,7 +288,7 @@ export const Dashboard: React.FC = () => {
                   </td>
                 </tr>
               ) : (
-                recentDocs.map((doc) => (
+                (Array.isArray(recentDocs) ? recentDocs : []).map((doc) => (
                   <tr key={doc.document_id} className="hover:bg-slate-50/80 transition-colors">
                     <td className="py-3 px-4">
                       <div className="font-bold text-navy truncate max-w-[220px]">{doc.file_name}</div>

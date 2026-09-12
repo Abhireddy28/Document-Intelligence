@@ -3,8 +3,13 @@ import { VerificationItem } from '../types';
 
 export const verificationService = {
   async getQueue(status: string = 'PENDING'): Promise<VerificationItem[]> {
-    const res = await api.get('/verification', { params: { status } });
-    return res.data;
+    try {
+      const res = await api.get('/verification', { params: { status } });
+      return Array.isArray(res.data) ? res.data : [];
+    } catch (e) {
+      console.warn('Error fetching verification queue:', e);
+      return [];
+    }
   },
 
   async getItem(verificationId: string): Promise<VerificationItem> {

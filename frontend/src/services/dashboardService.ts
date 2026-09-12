@@ -3,8 +3,13 @@ import { Student, DashboardStats, DashboardCharts, ExtractionQualityReport, Audi
 
 export const studentService = {
   async getStudents(search?: string, department?: string): Promise<Student[]> {
-    const res = await api.get('/students', { params: { search, department } });
-    return res.data;
+    try {
+      const res = await api.get('/students', { params: { search, department } });
+      return Array.isArray(res.data) ? res.data : [];
+    } catch (e) {
+      console.warn('Error fetching students:', e);
+      return [];
+    }
   },
 
   async getStudent(rollNumber: string): Promise<{ student: Student; linked_documents: any[] }> {
@@ -20,8 +25,13 @@ export const dashboardService = {
   },
 
   async getRecent(): Promise<any[]> {
-    const res = await api.get('/dashboard/recent');
-    return res.data;
+    try {
+      const res = await api.get('/dashboard/recent');
+      return Array.isArray(res.data) ? res.data : [];
+    } catch (e) {
+      console.warn('Error fetching recent docs:', e);
+      return [];
+    }
   },
 
   async getCharts(): Promise<DashboardCharts> {
@@ -35,7 +45,12 @@ export const dashboardService = {
   },
 
   async getAuditLogs(documentId?: string, action?: string): Promise<AuditLog[]> {
-    const res = await api.get('/audit-logs', { params: { document_id: documentId, action } });
-    return res.data;
+    try {
+      const res = await api.get('/audit-logs', { params: { document_id: documentId, action } });
+      return Array.isArray(res.data) ? res.data : [];
+    } catch (e) {
+      console.warn('Error fetching audit logs:', e);
+      return [];
+    }
   },
 };
